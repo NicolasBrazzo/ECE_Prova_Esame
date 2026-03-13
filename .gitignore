@@ -69,6 +69,4 @@ package-lock.json
 pnpm-lock.yaml
 yarn.lock
 
-CLAUDE.md 
-fix.md
-TODO_.md
+/*.md
