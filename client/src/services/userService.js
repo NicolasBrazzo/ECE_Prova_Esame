@@ -5,7 +5,7 @@ export const fetchUsers = async () => {
     const res = await api.get("/users");
     return res.data.users;
   } catch (err) {
-    throw new Error("Errore nel fetch degli utenti");
+    throw new Error(err.message);
   }
 };
 
@@ -14,17 +14,16 @@ export const fetchUserById = async (id) => {
     const res = await api.get(`/users/${id}`);
     return res.data.user;
   } catch (err) {
-    throw new Error("Errore nel fetch dell'utente");
+    throw new Error(err.message);
   }
 };
 
-    export const createUser = async (payload) => {
-  console.log("createUser", payload);
+export const createUser = async (payload) => {
   try {
     const res = await api.post("/users", payload);
     return res.data.user;
   } catch (err) {
-    throw new Error("Errore nella creazione dell'utente");
+    throw new Error(err.message);
   }
 };
 
@@ -33,7 +32,7 @@ export const updateUser = async (id, payload) => {
     const res = await api.put(`/users/${id}`, payload);
     return res.data.user;
   } catch (err) {
-    throw new Error(err.message || "Errore nell'aggiornamento dell'utente");
+    throw new Error(err.message);
   }
 };
 
@@ -42,6 +41,6 @@ export const deleteUser = async (id) => {
     const res = await api.delete(`/users/${id}`);
     return res.data.user;
   } catch (err) {
-    throw new Error("Errore nella cancellazione dell'utente");
+    throw new Error(err.message);
   }
 };

@@ -109,8 +109,6 @@ router.post("/", protect, async (req, res) => {
       delivery_key,
       status,
     );
-    console.log(delivery);
-
     return res.status(201).json({ ok: true, delivery });
   } catch (err) {
     console.error("CREATE DELIVERY ERROR:", err);

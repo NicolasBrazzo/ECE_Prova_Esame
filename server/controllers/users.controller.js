@@ -89,8 +89,6 @@ router.post("/", protect, isAdmin, async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await createNewUser(email, hashedPassword, isAdmin);
-    console.log(user);
-
     return res.status(201).json({ ok: true, user });
   } catch (err) {
     console.error("CREATE USER ERROR:", err);

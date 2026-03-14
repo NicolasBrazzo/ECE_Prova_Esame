@@ -6,7 +6,7 @@ export const fetchClients = async () => {
     const res = await api.get("/clients");
     return res.data.clients;
   } catch (err) {
-    throw new Error("Errore nel fetch dei clienti");
+    throw new Error(err.message);
   }
 };
 
@@ -15,7 +15,7 @@ export const fetchClientById = async (id) => {
     const res = await api.get(`/clients/${id}`);
     return res.data.client;
   } catch (err) {
-    throw new Error("Errore nel fetch del cliente");
+    throw new Error(err.message);
   }
 };
 
@@ -24,8 +24,7 @@ export const createClient = async (payload) => {
     const res = await api.post("/clients", payload);
     return res.data.client;
   } catch (err) {
-    console.log(err)
-    throw new Error(err.message || "Errore nella creazione del cliente");
+    throw new Error(err.message);
   }
 };
 
@@ -34,7 +33,7 @@ export const updateClient = async (id, payload) => {
     const res = await api.put(`/clients/${id}`, payload);
     return res.data.client;
   } catch (err) {
-    throw new Error(err.message || "Errore nell'aggiornamento del cliente");
+    throw new Error(err.message);
   }
 };
 
@@ -43,7 +42,7 @@ export const deleteClient = async (id) => {
     const res = await api.delete(`/clients/${id}`);
     return res.data.client;
   } catch (err) {
-    showError(err.message || "Errore nell'eliminazione del cliente");
-    throw new Error(err.message || "Errore nell'eliminazione del cliente");
+    showError(err.message);
+    throw new Error(err.message);
   }
 };

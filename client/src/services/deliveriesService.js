@@ -5,7 +5,7 @@ export const fetchDeliveries = async (filters = {}) => {
     const res = await api.get("/deliveries", { params: filters });
     return res.data.deliveries;
   } catch (err) {
-    throw new Error("Errore nel fetch delle consegne");
+    throw new Error(err.message);
   }
 };
 
@@ -14,7 +14,7 @@ export const fetchDeliveryById = async (id) => {
     const res = await api.get(`/deliveries/${id}`);
     return res.data.delivery;
   } catch (err) {
-    throw new Error("Errore nel fetch della consegna");
+    throw new Error(err.message);
   }
 };
 
@@ -25,19 +25,16 @@ export const trackDelivery = async (delivery_key, collection_date) => {
     });
     return res.data.track;
   } catch (err) {
-    const message =
-      err?.response?.data?.error || "Errore nel tracking della consegna";
-    throw new Error(message);
+    throw new Error(err.message);
   }
 };
 
 export const createDelivery = async (payload) => {
-  console.log("createDelivery", payload);
   try {
     const res = await api.post("/deliveries", payload);
     return res.data.delivery;
   } catch (err) {
-    throw new Error("Errore nella creazione della consegna");
+    throw new Error(err.message);
   }
 };
 
@@ -46,7 +43,7 @@ export const updateDelivery = async (id, payload) => {
     const res = await api.put(`/deliveries/${id}`, payload);
     return res.data.delivery;
   } catch (err) {
-    throw new Error("Errore nell'aggiornamento della consegna");
+    throw new Error(err.message);
   }
 };
 
@@ -55,6 +52,6 @@ export const deleteDelivery = async (id) => {
     const res = await api.delete(`/deliveries/${id}`);
     return res.data.delivery;
   } catch (err) {
-    throw new Error("Errore nella cancellazione della consegna");
+    throw new Error(err.message);
   }
 };

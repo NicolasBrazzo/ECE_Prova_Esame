@@ -42,28 +42,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const register = async (credentials) => {
-    try {
-      const res = await api.post("/auth/register", credentials);
-      if (res.data.ok && res.data.token) {
-        localStorage.setItem("token", res.data.token);
-        await checkAuth();
-        return { ok: true };
-      }
-      return {
-        ok: false,
-        message: res.data?.error || "Registration failed",
-        details: res.data?.details || [],
-      };
-    } catch (err) {
-      return {
-        ok: false,
-        message: err.message,
-        details: err.details || [],
-      };
-    }
-  };
-
   const login = async (credentials) => {
     try {
       const res = await api.post("/auth/login", credentials);

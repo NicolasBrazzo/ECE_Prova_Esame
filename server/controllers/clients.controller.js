@@ -104,8 +104,6 @@ router.post("/", protect, async (req, res) => {
       email,
       note,
     );
-    console.log(client);
-
     return res.status(201).json({ ok: true, client });
   } catch (err) {
     console.error("CREATE CLIENT ERROR:", err);
