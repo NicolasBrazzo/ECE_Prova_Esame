@@ -20,7 +20,7 @@ router.post("/login", async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({
         ok: false,
-        error: "Missing credentials",
+        error: "Email e password sono obbligatorie",
       });
     }
 
@@ -29,7 +29,7 @@ router.post("/login", async (req, res) => {
     if (!user) {
       return res.status(401).json({
         ok: false,
-        error: "Invalid credentials",
+        error: "Credenziali non valide",
       });
     }
 
@@ -38,7 +38,7 @@ router.post("/login", async (req, res) => {
     if (!match) {
       return res.status(401).json({
         ok: false,
-        error: "Invalid credentials",
+        error: "Credenziali non valide",
       });
     }
 
@@ -62,7 +62,7 @@ router.post("/login", async (req, res) => {
 
     return res.status(500).json({
       ok: false,
-      error: "Internal server error",
+      error: "Errore interno del server",
     });
   }
 });

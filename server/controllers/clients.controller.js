@@ -22,7 +22,7 @@ router.get("/", protect, async (req, res) => {
     return res.status(200).json({ ok: true, clients });
   } catch (err) {
     console.error("GET ALL CLIENTS ERROR:", err);
-    return res.status(500).json({ ok: false, error: "Internal server error" });
+    return res.status(500).json({ ok: false, error: "Errore interno del server" });
   }
 });
 
@@ -32,12 +32,12 @@ router.get("/:id", protect, async (req, res) => {
     const { id } = req.params;
     const client = await findClientById(id);
     if (!client) {
-      return res.status(404).json({ ok: false, error: "Client not found" });
+      return res.status(404).json({ ok: false, error: "Cliente non trovato" });
     }
     return res.status(200).json({ ok: true, client });
   } catch (err) {
     console.error("GET SINGLE CLIENT BY ID ERROR:", err);
-    return res.status(500).json({ ok: false, error: "Internal server error" });
+    return res.status(500).json({ ok: false, error: "Errore interno del server" });
   }
 });
 
@@ -51,12 +51,12 @@ router.post("/", protect, async (req, res) => {
       return res.status(400).json({
         ok: false,
         error:
-          "Missing required fields: name, via, comune, provincia, phone, email",
+          "Campi obbligatori mancanti: nome, via, comune, provincia, telefono, email",
       });
     }
 
     const minLengthChecks = [
-      { field: "name", value: name, label: "Name" },
+      { field: "name", value: name, label: "Nome" },
       { field: "via", value: via, label: "Via" },
       { field: "comune", value: comune, label: "Comune" },
       { field: "provincia", value: provincia, label: "Provincia" },
@@ -66,7 +66,7 @@ router.post("/", protect, async (req, res) => {
       if (typeof value !== "string" || value.trim().length < 2) {
         return res.status(400).json({
           ok: false,
-          error: `${label} must be at least 2 characters long`,
+          error: `${label} deve contenere almeno 2 caratteri`,
         });
       }
     }
@@ -75,7 +75,7 @@ router.post("/", protect, async (req, res) => {
     if (!validateEmail(email)) {
       return res.status(400).json({
         ok: false,
-        error: "Invalid email format: must be in the format text@domain.tld",
+        error: "Formato email non valido: deve essere nel formato testo@dominio.tld",
       });
     }
 
@@ -83,7 +83,7 @@ router.post("/", protect, async (req, res) => {
     if (!validatePhoneNumber(phone)) {
       return res.status(400).json({
         ok: false,
-        error: "Invalid phone number: must be in the format +39XXXXXXXXXX",
+        error: "Numero di telefono non valido: deve essere nel formato +39XXXXXXXXXX",
       });
     }
 
@@ -91,7 +91,7 @@ router.post("/", protect, async (req, res) => {
     if (existingClient) {
       return res.status(409).json({
         ok: false,
-        error: "Email already in use",
+        error: "Email già in uso",
       });
     }
 
@@ -107,7 +107,7 @@ router.post("/", protect, async (req, res) => {
     return res.status(201).json({ ok: true, client });
   } catch (err) {
     console.error("CREATE CLIENT ERROR:", err);
-    return res.status(500).json({ ok: false, error: "Internal server error" });
+    return res.status(500).json({ ok: false, error: "Errore interno del server" });
   }
 });
 
@@ -122,7 +122,7 @@ router.put("/:id", protect, async (req, res) => {
       if (!validateEmail(email)) {
         return res.status(400).json({
           ok: false,
-          error: "Invalid email format: must be in the format text@domain.tld",
+          error: "Formato email non valido: deve essere nel formato testo@dominio.tld",
         });
       }
     }
@@ -132,7 +132,7 @@ router.put("/:id", protect, async (req, res) => {
       if (!validatePhoneNumber(phone)) {
         return res.status(400).json({
           ok: false,
-          error: "Invalid phone number: must be in the format +39XXXXXXXXXX",
+          error: "Numero di telefono non valido: deve essere nel formato +39XXXXXXXXXX",
         });
       }
     }
@@ -149,7 +149,7 @@ router.put("/:id", protect, async (req, res) => {
     return res.status(200).json({ ok: true, client });
   } catch (err) {
     console.error("UPDATE CLIENT BY ID ERROR:", err);
-    return res.status(500).json({ ok: false, error: "Internal server error" });
+    return res.status(500).json({ ok: false, error: "Errore interno del server" });
   }
 });
 
@@ -170,7 +170,7 @@ router.delete("/:id", protect, async (req, res) => {
     return res.status(200).json({ ok: true, client });
   } catch (err) {
     console.error("DELETE CLIENT BY ID ERROR:", err);
-    return res.status(500).json({ ok: false, error: "Internal server error" });
+    return res.status(500).json({ ok: false, error: "Errore interno del server" });
   }
 });
 

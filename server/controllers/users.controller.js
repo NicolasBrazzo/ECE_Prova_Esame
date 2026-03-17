@@ -17,7 +17,7 @@ const router = express.Router();
 // middleware to check if user is admin
 const isAdmin = (req, res, next) => {
   if (!req.user.isAdmin) {
-    return res.status(403).json({ ok: false, error: "Unauthorized" });
+    return res.status(403).json({ ok: false, error: "Accesso non autorizzato" });
   }
   next();
 };
@@ -29,7 +29,7 @@ router.get("/", protect, isAdmin, async (req, res) => {
     return res.status(200).json({ ok: true, users });
   } catch (err) {
     console.error("GET ALL USERS ERROR:", err);
-    return res.status(500).json({ ok: false, error: "Internal server error" });
+    return res.status(500).json({ ok: false, error: "Errore interno del server" });
   }
 });
 
@@ -39,12 +39,12 @@ router.get("/:id", protect, isAdmin, async (req, res) => {
     const { id } = req.params;
     const user = await findUserById(id);
     if (!user) {
-      return res.status(404).json({ ok: false, error: "User not found" });
+      return res.status(404).json({ ok: false, error: "Utente non trovato" });
     }
     return res.status(200).json({ ok: true, user });
   } catch (err) {
     console.error("GET SINGLE USER BY ID ERROR:", err);
-    return res.status(500).json({ ok: false, error: "Internal server error" });
+    return res.status(500).json({ ok: false, error: "Errore interno del server" });
   }
 });
 
@@ -57,7 +57,7 @@ router.post("/", protect, isAdmin, async (req, res) => {
     if (!email || !password || typeof isAdmin !== "boolean") {
       return res.status(400).json({
         ok: false,
-        error: "Missing required fields: email, password, isAdmin",
+        error: "Campi obbligatori mancanti: email, password, tipo utente",
       });
     }
 
@@ -65,7 +65,7 @@ router.post("/", protect, isAdmin, async (req, res) => {
     if (!validateEmail(email)) {
       return res.status(400).json({
         ok: false,
-        error: "Invalid email format: must be in the format text@domain.tld",
+        error: "Formato email non valido: deve essere nel formato testo@dominio.tld",
       });
     }
 
@@ -82,7 +82,7 @@ router.post("/", protect, isAdmin, async (req, res) => {
     if (existingUser) {
       return res.status(409).json({
         ok: false,
-        error: "Email already in use",
+        error: "Email già in uso",
       });
     }
 
@@ -92,7 +92,7 @@ router.post("/", protect, isAdmin, async (req, res) => {
     return res.status(201).json({ ok: true, user });
   } catch (err) {
     console.error("CREATE USER ERROR:", err);
-    return res.status(500).json({ ok: false, error: "Internal server error" });
+    return res.status(500).json({ ok: false, error: "Errore interno del server" });
   }
 });
 
@@ -113,7 +113,7 @@ router.put("/:id", protect, isAdmin, async (req, res) => {
     if (!email || typeof isAdmin !== "boolean") {
       return res.status(400).json({
         ok: false,
-        error: "Missing required fields: email, isAdmin",
+        error: "Campi obbligatori mancanti: email, tipo utente",
       });
     }
 
@@ -136,7 +136,7 @@ router.put("/:id", protect, isAdmin, async (req, res) => {
     return res.status(200).json({ ok: true, user });
   } catch (err) {
     console.error("UPDATE USER BY ID ERROR:", err);
-    return res.status(500).json({ ok: false, error: "Internal server error" });
+    return res.status(500).json({ ok: false, error: "Errore interno del server" });
   }
 });
 
@@ -149,7 +149,7 @@ router.delete("/:id", protect, isAdmin, async (req, res) => {
     return res.status(200).json({ ok: true, user });
   } catch (err) {
     console.error("DELETE USER BY ID ERROR:", err);
-    return res.status(500).json({ ok: false, error: "Internal server error" });
+    return res.status(500).json({ ok: false, error: "Errore interno del server" });
   }
 });
 

@@ -7,7 +7,6 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(undefined);
   const [loading, setLoading] = useState(true);
 
-  // Non penso che serva
   useEffect(() => {
     checkAuth();
   }, []);

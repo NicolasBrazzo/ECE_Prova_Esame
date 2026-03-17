@@ -30,12 +30,12 @@ app.get("/health", (req, res) => {
 });
 
 app.use((req, res) => {
-  res.status(404).json({ error: "Route not found" });
+  res.status(404).json({ ok: false, error: "Rotta non trovata" });
 });
 
 app.use((err, req, res, next) => {
   console.error("Server error:", err);
-  res.status(500).json({ error: "Internal server error" });
+  res.status(500).json({ ok: false, error: "Errore interno del server" });
 });
 
 app.listen(PORT, "0.0.0.0", () => {

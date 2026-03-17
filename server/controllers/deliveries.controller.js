@@ -28,7 +28,7 @@ router.get("/", protect, async (req, res) => {
     return res.status(200).json({ ok: true, deliveries });
   } catch (err) {
     console.error("GET ALL DELIVERIES ERROR:", err);
-    return res.status(500).json({ ok: false, error: "Internal server error" });
+    return res.status(500).json({ ok: false, error: "Errore interno del server" });
   }
 });
 
@@ -40,7 +40,7 @@ router.get("/track", async (req, res) => {
     if (!delivery_key || !collection_date) {
       return res.status(400).json({
         ok: false,
-        error: "Missing required fields: delivery_key, collection_date",
+        error: "Campi obbligatori mancanti: chiave di consegna, data di ritiro",
       });
     }
 
@@ -49,12 +49,12 @@ router.get("/track", async (req, res) => {
       collection_date,
     );
     if (!track) {
-      return res.status(404).json({ ok: false, error: "Track not found" });
+      return res.status(404).json({ ok: false, error: "Tracciamento non trovato" });
     }
     return res.status(200).json({ ok: true, track: track });
   } catch (err) {
     console.error("TRACK DELIVERY BY DELIVERY KEY ERROR:", err);
-    return res.status(500).json({ ok: false, error: "Track not found" });
+    return res.status(500).json({ ok: false, error: "Errore interno del server" });
   }
 });
 
@@ -64,12 +64,12 @@ router.get("/:id", protect, async (req, res) => {
     const { id } = req.params;
     const delivery = await findDeliveryById(id);
     if (!delivery) {
-      return res.status(404).json({ ok: false, error: "Delivery not found" });
+      return res.status(404).json({ ok: false, error: "Consegna non trovata" });
     }
     return res.status(200).json({ ok: true, delivery });
   } catch (err) {
     console.error("GET SINGLE DELIVERY BY ID ERROR:", err);
-    return res.status(500).json({ ok: false, error: "Internal server error" });
+    return res.status(500).json({ ok: false, error: "Errore interno del server" });
   }
 }); 
 
@@ -83,14 +83,14 @@ router.post("/", protect, async (req, res) => {
     if (!client_id || !collection_date || !status) {
       return res.status(400).json({
         ok: false,
-        error: "Missing required fields: client_id, collection_date, status",
+        error: "Campi obbligatori mancanti: id cliente, data di ritiro, stato",
       });
     }
 
     if (!VALID_STATUSES.includes(status)) {
       return res.status(400).json({
         ok: false,
-        error: `Invalid status. Must be one of: ${VALID_STATUSES.join(", ")}`,
+        error: `Stato non valido. Deve essere uno dei seguenti: ${VALID_STATUSES.join(", ")}`,
       });
     }
 
@@ -105,7 +105,7 @@ router.post("/", protect, async (req, res) => {
     if (existingDelivery) {
       return res.status(409).json({
         ok: false,
-        error: "Delivery key already in use",
+        error: "Chiave di consegna già in uso",
       });
     }
 
@@ -119,7 +119,7 @@ router.post("/", protect, async (req, res) => {
     return res.status(201).json({ ok: true, delivery });
   } catch (err) {
     console.error("CREATE DELIVERY ERROR:", err);
-    return res.status(500).json({ ok: false, error: "Internal server error" });
+    return res.status(500).json({ ok: false, error: "Errore interno del server" });
   }
 });
 
@@ -132,7 +132,7 @@ router.put("/:id", protect, async (req, res) => {
     if (status !== undefined && !VALID_STATUSES.includes(status)) {
       return res.status(400).json({
         ok: false,
-        error: `Invalid status. Must be one of: ${VALID_STATUSES.join(", ")}`,
+        error: `Stato non valido. Deve essere uno dei seguenti: ${VALID_STATUSES.join(", ")}`,
       });
     }
 
@@ -152,7 +152,7 @@ router.put("/:id", protect, async (req, res) => {
     return res.status(200).json({ ok: true, delivery });
   } catch (err) {
     console.error("UPDATE DELIVERY BY ID ERROR:", err);
-    return res.status(500).json({ ok: false, error: "Internal server error" });
+    return res.status(500).json({ ok: false, error: "Errore interno del server" });
   }
 });
 
@@ -165,7 +165,7 @@ router.delete("/:id", protect, async (req, res) => {
     return res.status(200).json({ ok: true, delivery });
   } catch (err) {
     console.error("DELETE DELIVERY BY ID ERROR:", err);
-    return res.status(500).json({ ok: false, error: "Internal server error" });
+    return res.status(500).json({ ok: false, error: "Errore interno del server" });
   }
 });
 
